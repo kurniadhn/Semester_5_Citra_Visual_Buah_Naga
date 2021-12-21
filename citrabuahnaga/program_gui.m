@@ -52,6 +52,8 @@ function program_gui_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to program_gui (see VARARGIN)
 
+movegui('center')
+
 % Choose default command line output for program_gui
 handles.output = hObject;
 
@@ -60,6 +62,11 @@ guidata(hObject, handles);
 
 % UIWAIT makes program_gui wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
+
+ah = axes('unit','normalized','position',[0 0 1 1]);
+bg = imread('images.jpg');
+imagesc(bg);
+set(ah,'handlevisibility','off','visible','off')
 
 
 % --- Outputs from this function are returned to the command line.
@@ -159,18 +166,96 @@ if ~isequal(nama_file,0)
     % menampilkan citra rgb pada axes1
     axes(handles.axes1)
     imshow(Img)
-    title('Citra RGB Asli')
     % menampilkan nama file pada edit text
     set(handles.edit1,'String',nama_file)
     % menyimpan variabel Img pada lokasi handles agar dapat dipanggil oleh
     % pushbutton lainnya
     handles.Img = Img;
     guidata(hObject, handles)
+    
+    % memanggil variabel Img yang ada di lokasi handles
+    Img = handles.Img;
+
+    % mengkonversi citra rgb menjadi citra grayscale
+    Img_gray = rgb2gray(Img);
+    %     figure, imshow(Img)
+    %     figure, imshow(Img_gray)
+    % mengkonversi citra grayscale menjadi citra biner
+    bw = imbinarize(Img_gray,.9);
+    %     figure, imshow(bw)
+    % melakukan operasi komplemen
+    bw = imcomplement(bw);
+    %     figure, imshow(bw)
+    % melakukan operasi morfologi untuk menyempurnakan hasil segmentasi
+    % 1. filling holes
+    bw = imfill(bw,'holes');
+    %     figure, imshow(bw)
+    % 2. area opening
+    bw = bwareaopen(bw, 100);
+    %     figure, imshow(bw)
+    % ekstraksi warna rgb
+    R = Img(:,:,1);
+    G = Img(:,:,2);
+    B = Img(:,:,3);
+    R(~bw) = 0;
+    G(~bw) = 0;
+    B(~bw) = 0;
+    RGB = cat(3,R,G,B);
+    %     figure, imshow(RGB)
+
+    Red = sum(sum(R))/sum(sum(bw));
+    Green = sum(sum(G))/sum(sum(bw));
+    Blue = sum(sum(B))/sum(sum(bw));
+
+    % menyusun variabel ciri_uji
+    ciri_uji = [Red,Green,Blue];
+
+    % menampilkan ciri RGB pada edit text
+    set(handles.edit3,'String',num2str(Red));
+    set(handles.edit4,'String',num2str(Green));
+    set(handles.edit5,'String',num2str(Blue));
+
+    % menyimpan variabel ciri_uji pada lokasi handles agar dapat dipanggil oleh
+    % pushbutton lainnya
+    handles.ciri_uji = ciri_uji;
+    guidata(hObject, handles)
+
+    % memanggil variabel ciri_uji yang ada di lokasi handles
+    ciri_uji = handles.ciri_uji;
+
+    % memanggil model k-nn hasil pelatihan
+    load Mdl
+
+    % membaca kelas keluaran hasil pengujian
+    hasil_uji = predict(Mdl, ciri_uji);
+
+    % menampilkan kelas keluaran hasil pengujian pada edit text
+    set(handles.edit2, 'String',hasil_uji{1})
+
+    
+    
 else
     % jika tidak ada nama file yang dipilih maka akan kembali
     return
 end
 
+% --- Executes on button press in pushbutton5.
+    function pushbutton5_Callback(hObject, eventdata, handles)
+    % hObject    handle to pushbutton5 (see GCBO)
+    % eventdata  reserved - to be defined in a future version of MATLAB
+    % handles    structure with handles and user data (see GUIDATA)
+
+    % mereset tampilan GUI
+    set(handles.edit1,'String',[])
+    set(handles.edit2,'String',[])
+    set(handles.edit3,'String',[])
+    set(handles.edit4,'String',[])
+    set(handles.edit5,'String',[])
+
+    axes(handles.axes1)
+    cla reset
+    set(gca,'XTick',[])
+    set(gca,'YTick',[])
 
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
@@ -178,40 +263,7 @@ function pushbutton2_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% memanggil variabel Img yang ada di lokasi handles
-Img = handles.Img;
 
-% mengkonversi citra rgb menjadi citra grayscale
-Img_gray = rgb2gray(Img);
-%     figure, imshow(Img)
-%     figure, imshow(Img_gray)
-% mengkonversi citra grayscale menjadi citra biner
-bw = imbinarize(Img_gray,.9);
-%     figure, imshow(bw)
-% melakukan operasi komplemen
-bw = imcomplement(bw);
-%     figure, imshow(bw)
-% melakukan operasi morfologi untuk menyempurnakan hasil segmentasi
-% 1. filling holes
-bw = imfill(bw,'holes');
-%     figure, imshow(bw)
-% 2. area opening
-bw = bwareaopen(bw, 100);
-%     figure, imshow(bw)
-% ekstraksi warna rgb
-R = Img(:,:,1);
-G = Img(:,:,2);
-B = Img(:,:,3);
-R(~bw) = 0;
-G(~bw) = 0;
-B(~bw) = 0;
-RGB = cat(3,R,G,B);
-%     figure, imshow(RGB)
-
-% menampilkan citra RGB hasil segmentasi pada axes2
-axes(handles.axes2)
-imshow(RGB)
-title('Citra RGB Hasil Segmentasi')
 
 % menyimpan variabel R,G,B dan bw pada lokasi handles agar dapat dipanggil
 % oleh pushbutton lainnya
@@ -228,28 +280,7 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% memanggil variabel R,G,B dan bw yg ada di lokasi handles
-R = handles.R;
-G = handles.G;
-B = handles.B;
-bw = handles.bw;
 
-Red = sum(sum(R))/sum(sum(bw));
-Green = sum(sum(G))/sum(sum(bw));
-Blue = sum(sum(B))/sum(sum(bw));
-
-% menyusun variabel ciri_uji
-ciri_uji = [Red,Green,Blue];
-
-% menampilkan ciri RGB pada edit text
-set(handles.edit3,'String',num2str(Red));
-set(handles.edit4,'String',num2str(Green));
-set(handles.edit5,'String',num2str(Blue));
-
-% menyimpan variabel ciri_uji pada lokasi handles agar dapat dipanggil oleh
-% pushbutton lainnya
-handles.ciri_uji = ciri_uji;
-guidata(hObject, handles)
 
 
 % --- Executes on button press in pushbutton4.
@@ -258,40 +289,6 @@ function pushbutton4_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% memanggil variabel ciri_uji yang ada di lokasi handles
-ciri_uji = handles.ciri_uji;
-
-% memanggil model k-nn hasil pelatihan
-load Mdl
-
-% membaca kelas keluaran hasil pengujian
-hasil_uji = predict(Mdl, ciri_uji);
-
-% menampilkan kelas keluaran hasil pengujian pada edit text
-set(handles.edit2, 'String',hasil_uji{1})
-
-% --- Executes on button press in pushbutton5.
-function pushbutton5_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton5 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% mereset tampilan GUI
-set(handles.edit1,'String',[])
-set(handles.edit2,'String',[])
-set(handles.edit3,'String',[])
-set(handles.edit4,'String',[])
-set(handles.edit5,'String',[])
-
-axes(handles.axes1)
-cla reset
-set(gca,'XTick',[])
-set(gca,'YTick',[])
-
-axes(handles.axes2)
-cla reset
-set(gca,'XTick',[])
-set(gca,'YTick',[])
 
 
 function edit1_Callback(hObject, eventdata, handles)
