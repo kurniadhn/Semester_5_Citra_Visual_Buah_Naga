@@ -208,6 +208,10 @@ if ~isequal(nama_file,0)
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
+    
+    H(~bw) = 0;
+    S(~bw) = 0;
+    V(~bw) = 0;
 %     RGB = cat(3,R,G,B);
     %     figure, imshow(RGB)
 

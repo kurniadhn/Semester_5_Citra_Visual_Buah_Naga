@@ -44,6 +44,10 @@ for n = 1:jumlah_file
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
+    
+    H(~bw) = 0;
+    S(~bw) = 0;
+    V(~bw) = 0;
 %     RGB = cat(3,R,G,B);
 %     figure, imshow(RGB)
     Red = sum(sum(R))/sum(sum(bw));
@@ -108,6 +112,10 @@ for n = 1:jumlah_file
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
+    
+    H(~bw) = 0;
+    S(~bw) = 0;
+    V(~bw) = 0;
 %     RGB = cat(3,R,G,B);
 %     figure, imshow(RGB)
     Red = sum(sum(R))/sum(sum(bw));
@@ -173,6 +181,10 @@ for n = 1:jumlah_file
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
+    
+    H(~bw) = 0;
+    S(~bw) = 0;
+    V(~bw) = 0;
 %     RGB = cat(3,R,G,B);
 %     figure, imshow(RGB)
     Red = sum(sum(R))/sum(sum(bw));
@@ -237,6 +249,10 @@ HSV = rgb2hsv(Img);
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
+    
+    H(~bw) = 0;
+    S(~bw) = 0;
+    V(~bw) = 0;
 %     RGB = cat(3,R,G,B);
 %     figure, imshow(RGB)
     Red = sum(sum(R))/sum(sum(bw));
