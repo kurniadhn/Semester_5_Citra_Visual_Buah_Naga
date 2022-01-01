@@ -22,7 +22,7 @@ function varargout = program_gui(varargin)
 
 % Edit the above text to modify the response to help program_gui
 
-% Last Modified by GUIDE v2.5 01-Jan-2022 13:49:18
+% Last Modified by GUIDE v2.5 01-Jan-2022 17:45:28
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -274,12 +274,17 @@ end
     set(handles.edit6,'String',[])
     set(handles.edit7,'String',[])
     set(handles.edit8,'String',[])
+    set(handles.edit9,'String',[])
+    set(handles.edit10,'String',[])
+    set(handles.edit11,'String',[])
+    set(handles.edit12,'String',[])
     
-
     axes(handles.axes1)
     cla reset
     set(gca,'XTick',[])
     set(gca,'YTick',[])
+    
+    set(handles.uitable1,'Data',[],'RowName',{'' '' '' ''})
 
 % --- Executes on button press in pushbutton2.
 function pushbutton2_Callback(hObject, eventdata, handles)
@@ -451,6 +456,10 @@ jumlah_file = numel(nama_file);
 % ciri_uji = zeros(jumlah_file,6);
 % target_merah = cell(jumlah_file,1);
 
+jumlah_merah = 0;
+jumlah_merah_kuning = 0;
+jumlah_hijau_merah = 0;
+jumlah_hijau = 0;
 % melakukan pengolahan citra terhadap seluruh file
 for n = 1:jumlah_file
     % membaca file citra rgb
@@ -511,6 +520,19 @@ for n = 1:jumlah_file
     % membaca kelas keluaran hasil pengujian
     hasil_uji = predict(Mdl, ciri_uji);
     
+    if strcmp(hasil_uji{1},'buah naga merah')
+        jumlah_merah = jumlah_merah+1;
+    end
+    if strcmp(hasil_uji{1},'buah naga merah kuning')
+        jumlah_merah_kuning = jumlah_merah_kuning+1;
+    end
+    if strcmp(hasil_uji{1},'buah naga hijau merah')
+        jumlah_hijau_merah = jumlah_hijau_merah+1;
+    end
+    if strcmp(hasil_uji{1},'buah naga hijau')
+        jumlah_hijau = jumlah_hijau+1;
+    end
+    
     % menampilkan citra asli dan kelas keluaran hasil pengujian
     % menampilkan ciri hasil ekstraksi pada tabel
 %     ciri_tabel = cell(n,8);
@@ -524,4 +546,101 @@ for n = 1:jumlah_file
     ciri_tabel{n,8} = num2str(Value);
     
     set(handles.uitable1,'Data',ciri_tabel,'RowName',1:n)
+end
+
+set(handles.edit9,'String',num2str(jumlah_merah));
+set(handles.edit10,'String',num2str(jumlah_merah_kuning));
+set(handles.edit11,'String',num2str(jumlah_hijau_merah));
+set(handles.edit12,'String',num2str(jumlah_hijau));
+
+
+
+function edit12_Callback(hObject, eventdata, handles)
+% hObject    handle to edit12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit12 as text
+%        str2double(get(hObject,'String')) returns contents of edit12 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit12_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit12 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit11_Callback(hObject, eventdata, handles)
+% hObject    handle to edit11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit11 as text
+%        str2double(get(hObject,'String')) returns contents of edit11 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit11_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit11 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit10_Callback(hObject, eventdata, handles)
+% hObject    handle to edit10 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit10 as text
+%        str2double(get(hObject,'String')) returns contents of edit10 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit10_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit10 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit9_Callback(hObject, eventdata, handles)
+% hObject    handle to edit9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit9 as text
+%        str2double(get(hObject,'String')) returns contents of edit9 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit9_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
 end
