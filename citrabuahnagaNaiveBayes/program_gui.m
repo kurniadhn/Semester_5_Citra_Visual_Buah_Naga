@@ -22,7 +22,7 @@ function varargout = program_gui(varargin)
 
 % Edit the above text to modify the response to help program_gui
 
-% Last Modified by GUIDE v2.5 18-Dec-2021 14:56:43
+% Last Modified by GUIDE v2.5 01-Jan-2022 11:02:03
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -194,26 +194,42 @@ if ~isequal(nama_file,0)
     bw = bwareaopen(bw, 100);
     %     figure, imshow(bw)
     % ekstraksi warna rgb
+    
+    HSV = rgb2hsv(Img);
+    
     R = Img(:,:,1);
     G = Img(:,:,2);
     B = Img(:,:,3);
+    
+    H = HSV(:,:,1); % Hue
+    S = HSV(:,:,2); % Saturation
+    V = HSV(:,:,3); % Value
+    
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
-    RGB = cat(3,R,G,B);
+%     RGB = cat(3,R,G,B);
     %     figure, imshow(RGB)
 
     Red = sum(sum(R))/sum(sum(bw));
     Green = sum(sum(G))/sum(sum(bw));
     Blue = sum(sum(B))/sum(sum(bw));
+    
+    Hue = sum(sum(H))/sum(sum(bw));
+    Saturation = sum(sum(S))/sum(sum(bw));
+    Value = sum(sum(V))/sum(sum(bw));
 
     % menyusun variabel ciri_uji
-    ciri_uji = [Red,Green,Blue];
+    ciri_uji = [Red,Green,Blue,Hue,Saturation,Value];
 
     % menampilkan ciri RGB pada edit text
     set(handles.edit3,'String',num2str(Red));
     set(handles.edit4,'String',num2str(Green));
     set(handles.edit5,'String',num2str(Blue));
+    
+    set(handles.edit6,'String',num2str(Hue));
+    set(handles.edit7,'String',num2str(Saturation));
+    set(handles.edit8,'String',num2str(Value));
 
     % menyimpan variabel ciri_uji pada lokasi handles agar dapat dipanggil oleh
     % pushbutton lainnya
@@ -251,6 +267,10 @@ end
     set(handles.edit3,'String',[])
     set(handles.edit4,'String',[])
     set(handles.edit5,'String',[])
+    set(handles.edit6,'String',[])
+    set(handles.edit7,'String',[])
+    set(handles.edit8,'String',[])
+    
 
     axes(handles.axes1)
     cla reset
@@ -326,6 +346,75 @@ function edit2_Callback(hObject, eventdata, handles)
 % --- Executes during object creation, after setting all properties.
 function edit2_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to edit2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit6_Callback(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit6 as text
+%        str2double(get(hObject,'String')) returns contents of edit6 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit6_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit7_Callback(hObject, eventdata, handles)
+% hObject    handle to edit7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit7 as text
+%        str2double(get(hObject,'String')) returns contents of edit7 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit7_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function edit8_Callback(hObject, eventdata, handles)
+% hObject    handle to edit8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit8 as text
+%        str2double(get(hObject,'String')) returns contents of edit8 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit8_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit8 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

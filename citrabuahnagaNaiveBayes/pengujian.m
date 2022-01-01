@@ -7,7 +7,7 @@ nama_file = dir(fullfile(nama_folder,'*.jpg'));
 jumlah_file = numel(nama_file);
 
 % menginisialisasi variabel ciri_merah dan target_merah
-ciri_merah = zeros(jumlah_file,3);
+ciri_merah = zeros(jumlah_file,6);
 target_merah = cell(jumlah_file,1);
 
 % melakukan pengolahan citra terhadap seluruh file
@@ -31,22 +31,36 @@ for n = 1:jumlah_file
     % 2. area opening
     bw = bwareaopen(bw, 100);
     %     figure, imshow(bw)
-    % ekstraksi warna rgb
+    HSV = rgb2hsv(Img);
+
     R = Img(:,:,1);
     G = Img(:,:,2);
     B = Img(:,:,3);
+    
+    H = HSV(:,:,1); % Hue
+    S = HSV(:,:,2); % Saturation
+    V = HSV(:,:,3); % Value
+    
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
-    %     RGB = cat(3,R,G,B);
-    %     figure, imshow(RGB)
+%     RGB = cat(3,R,G,B);
+%     figure, imshow(RGB)
     Red = sum(sum(R))/sum(sum(bw));
     Green = sum(sum(G))/sum(sum(bw));
     Blue = sum(sum(B))/sum(sum(bw));
+    
+    Hue = sum(sum(H))/sum(sum(bw));
+    Saturation = sum(sum(S))/sum(sum(bw));
+    Value = sum(sum(V))/sum(sum(bw));
     % mengisi variabel ciri_merah dengan ciri hasil ekstraksi
     ciri_merah(n,1) = Red;
     ciri_merah(n,2) = Green;
     ciri_merah(n,3) = Blue;
+    
+    ciri_merah(n,4) = Hue;
+    ciri_merah(n,5) = Saturation;
+    ciri_merah(n,6) = Value;
     % mengisi variabel target_merah dengan nama kelas buah naga merah
     target_merah(n) = {'buah naga merah'};
 end
@@ -58,7 +72,7 @@ nama_file = dir(fullfile(nama_folder,'*.jpg'));
 jumlah_file = numel(nama_file);
 
 % menginisialisasi variabel ciri_merah_kuning dan target_merah_kuning
-ciri_merah_kuning = zeros(jumlah_file,3);
+ciri_merah_kuning = zeros(jumlah_file,6);
 target_merah_kuning = cell(jumlah_file,1);
 
 % melakukan pengolahan citra terhadap seluruh file
@@ -82,22 +96,36 @@ for n = 1:jumlah_file
     % 2. area opening
     bw = bwareaopen(bw, 100);
     %     figure, imshow(bw)
-    % ekstraksi warna rgb
+    HSV = rgb2hsv(Img);
+
     R = Img(:,:,1);
     G = Img(:,:,2);
     B = Img(:,:,3);
+    
+    H = HSV(:,:,1); % Hue
+    S = HSV(:,:,2); % Saturation
+    V = HSV(:,:,3); % Value
+    
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
-    %     RGB = cat(3,R,G,B);
-    %     figure, imshow(RGB)
+%     RGB = cat(3,R,G,B);
+%     figure, imshow(RGB)
     Red = sum(sum(R))/sum(sum(bw));
     Green = sum(sum(G))/sum(sum(bw));
     Blue = sum(sum(B))/sum(sum(bw));
+    
+    Hue = sum(sum(H))/sum(sum(bw));
+    Saturation = sum(sum(S))/sum(sum(bw));
+    Value = sum(sum(V))/sum(sum(bw));
     % mengisi variabel ciri_merah_kuning dengan ciri hasil ekstraksi
     ciri_merah_kuning(n,1) = Red;
     ciri_merah_kuning(n,2) = Green;
     ciri_merah_kuning(n,3) = Blue;
+    
+    ciri_merah_kuning(n,4) = Hue;
+    ciri_merah_kuning(n,5) = Saturation;
+    ciri_merah_kuning(n,6) = Value;
     % mengisi variabel target_merah_kuning dengan nama kelas buah naga
     % merah kuning
     target_merah_kuning(n) = {'buah naga merah kuning'};
@@ -110,7 +138,7 @@ nama_file = dir(fullfile(nama_folder,'*.jpg'));
 jumlah_file = numel(nama_file);
 
 % menginisialisasi variabel ciri_hijau dan target_hijau
-ciri_hijau = zeros(jumlah_file,3);
+ciri_hijau = zeros(jumlah_file,6);
 target_hijau = cell(jumlah_file,1);
 
 % melakukan pengolahan citra terhadap seluruh file
@@ -133,9 +161,16 @@ for n = 1:jumlah_file
     % 2. area opening
     bw = bwareaopen(bw, 100);
 %     figure, imshow(bw)
+    HSV = rgb2hsv(Img);
+
     R = Img(:,:,1);
     G = Img(:,:,2);
     B = Img(:,:,3);
+    
+    H = HSV(:,:,1); % Hue
+    S = HSV(:,:,2); % Saturation
+    V = HSV(:,:,3); % Value
+    
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
@@ -144,10 +179,18 @@ for n = 1:jumlah_file
     Red = sum(sum(R))/sum(sum(bw));
     Green = sum(sum(G))/sum(sum(bw));
     Blue = sum(sum(B))/sum(sum(bw));
+    
+    Hue = sum(sum(H))/sum(sum(bw));
+    Saturation = sum(sum(S))/sum(sum(bw));
+    Value = sum(sum(V))/sum(sum(bw));
     % mengisi variabel ciri_hijau dengan ciri hasil ekstraksi
     ciri_hijau(n,1) = Red;
     ciri_hijau(n,2) = Green;
     ciri_hijau(n,3) = Blue;
+    
+    ciri_hijau(n,4) = Hue;
+    ciri_hijau(n,5) = Saturation;
+    ciri_hijau(n,6) = Value;
     % mengisi variabel target_hijau dengan nama kelas buah naga hijau
     target_hijau(n) = {'buah naga hijau'};
 end
@@ -159,7 +202,7 @@ nama_file = dir(fullfile(nama_folder,'*.jpg'));
 jumlah_file = numel(nama_file);
 
 % menginisialisasi variabel ciri_hijau_merah dan target_hijau_merah
-ciri_hijau_merah = zeros(jumlah_file,3);
+ciri_hijau_merah = zeros(jumlah_file,6);
 target_hijau_merah = cell(jumlah_file,1);
 
 % melakukan pengolahan citra terhadap seluruh file
@@ -183,9 +226,16 @@ for n = 1:jumlah_file
     % 2. area opening
     bw = bwareaopen(bw, 100);
 %     figure, imshow(bw)
+    HSV = rgb2hsv(Img);
+
     R = Img(:,:,1);
     G = Img(:,:,2);
     B = Img(:,:,3);
+    
+    H = HSV(:,:,1); % Hue
+    S = HSV(:,:,2); % Saturation
+    V = HSV(:,:,3); % Value
+    
     R(~bw) = 0;
     G(~bw) = 0;
     B(~bw) = 0;
@@ -194,10 +244,18 @@ for n = 1:jumlah_file
     Red = sum(sum(R))/sum(sum(bw));
     Green = sum(sum(G))/sum(sum(bw));
     Blue = sum(sum(B))/sum(sum(bw));
+    
+    Hue = sum(sum(H))/sum(sum(bw));
+    Saturation = sum(sum(S))/sum(sum(bw));
+    Value = sum(sum(V))/sum(sum(bw));
     % mengisi variabel ciri_hijau_merah dengan ciri hasil ekstraksi
     ciri_hijau_merah(n,1) = Red;
     ciri_hijau_merah(n,2) = Green;
     ciri_hijau_merah(n,3) = Blue;
+    
+    ciri_hijau_merah(n,4) = Hue;
+    ciri_hijau_merah(n,5) = Saturation;
+    ciri_hijau_merah(n,6) = Value;
     % mengisi variabel target_hijau_merah dengan nama kelas buah naga hijau
     % merah
     target_hijau_merah(n) = {'buah naga hijau'};
