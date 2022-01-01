@@ -515,7 +515,7 @@ for n = 1:jumlah_file
     % menampilkan ciri hasil ekstraksi pada tabel
 %     ciri_tabel = cell(n,8);
     ciri_tabel{n,1} = fullfile(nama_file(n).name);
-    ciri_tabel{n,2} = hasil_uji{1};
+    ciri_tabel{n,2} = hasil_uji;
     ciri_tabel{n,3} = num2str(Red);
     ciri_tabel{n,4} = num2str(Green);
     ciri_tabel{n,5} = num2str(Blue);
