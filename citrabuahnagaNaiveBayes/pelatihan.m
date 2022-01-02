@@ -18,7 +18,7 @@ for n = 1:jumlah_file
 %     figure, imshow(Img)
 %     figure, imshow(Img_gray)
     % mengkonversi citra grayscale menjadi citra biner
-    bw = imbinarize(Img_gray,.9);
+    bw = imbinarize(Img_gray,.5);
 %     figure, imshow(bw)
     % melakukan operasi komplemen
     bw = imcomplement(bw);
@@ -87,7 +87,7 @@ for n = 1:jumlah_file
 %     figure, imshow(Img)
 %     figure, imshow(Img_gray)
     % mengkonversi citra grayscale menjadi citra biner
-    bw = imbinarize(Img_gray,.9);
+    bw = imbinarize(Img_gray,.5);
 %     figure, imshow(bw)
     % melakukan operasi komplemen
     bw = imcomplement(bw);
@@ -156,7 +156,7 @@ for n = 1:jumlah_file
 %     figure, imshow(Img)
 %     figure, imshow(Img_gray)
     % mengkonversi citra grayscale menjadi citra biner
-    bw = imbinarize(Img_gray,.9);
+    bw = imbinarize(Img_gray,.5);
 %     figure, imshow(bw)
     % melakukan operasi komplemen
     bw = imcomplement(bw);
@@ -224,7 +224,7 @@ for n = 1:jumlah_file
 %     figure, imshow(Img)
 %     figure, imshow(Img_gray)
     % mengkonversi citra grayscale menjadi citra biner
-    bw = imbinarize(Img_gray,.9);
+    bw = imbinarize(Img_gray,.5);
 %     figure, imshow(bw)
     % melakukan operasi komplemen
     bw = imcomplement(bw);
