@@ -37,10 +37,10 @@ for n = 1:jumlah_file
 %     figure, imshow(bw)
     % melakukan operasi morfologi untuk menyempurnakan hasil segmentasi
     % 1. filling holes
-    bw = imfill(bw,'holes'); % mengisi nilai pada area berlubang
+    bw = imfill(bw,'holes');
 %     figure, imshow(bw)
     % 2. area opening
-    bw = bwareaopen(bw, 100); % menghapus nilai pada noises
+    bw = bwareaopen(bw, 100);
 %     figure, imshow(bw)
 
     HSV = rgb2hsv(Img);
