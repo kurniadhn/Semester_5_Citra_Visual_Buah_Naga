@@ -1,0 +1,5 @@
+pelatihan 9 = 90%
+pengujian 9 = 75%
+
+pelatihan 5 = 98%
+pengujian 5 = 87%
