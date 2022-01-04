@@ -18,6 +18,7 @@ for n = 1:jumlah_file
     % A dapat berupa citra intensitas skala abu-abu, citra truecolor, 
     % atau citra biner. im2double mengubah skala output dari tipe data 
     % integer ke kisaran [0, 1].
+    % mengkonversi citra rgb menjadi citra grayscale
     Img_gray = rgb2gray(Img);
     % rgb2gray(RGB) mengonversi RGB gambar truecolor menjadi gambar skala 
     % abu-abu I. Fungsi rgb2gray mengubah gambar RGB menjadi skala abu-abu 
@@ -36,7 +37,7 @@ for n = 1:jumlah_file
     bw = imcomplement(bw); % mengubah nilai 1 menjadi 0 dan sebaliknya
 %     figure, imshow(bw)
     % melakukan operasi morfologi untuk menyempurnakan hasil segmentasi
-    % 1. filling holes
+    % 1. filling holes 
     bw = imfill(bw,'holes'); % mengisi nilai pada area berlubang
 %     figure, imshow(bw)
     % 2. area opening
