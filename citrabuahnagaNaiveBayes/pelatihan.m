@@ -13,22 +13,35 @@ target_merah = cell(jumlah_file,1);
 % melakukan pengolahan citra terhadap seluruh file
 for n = 1:jumlah_file
     % membaca file citra rgb
-    Img = im2double(imread(fullfile(nama_folder,nama_file(n).name)));
+    Img = im2double(imread(fullfile(nama_folder,nama_file(n).name))); 
+    % im2double(A) mengonversi gambar A menjadi presisi ganda.
+    % A dapat berupa citra intensitas skala abu-abu, citra truecolor, 
+    % atau citra biner. im2double mengubah skala output dari tipe data 
+    % integer ke kisaran [0, 1].
+    % mengkonversi citra rgb menjadi citra grayscale
     Img_gray = rgb2gray(Img);
+    % rgb2gray(RGB) mengonversi RGB gambar truecolor menjadi gambar skala 
+    % abu-abu I. Fungsi rgb2gray mengubah gambar RGB menjadi skala abu-abu 
+    % dengan menghilangkan informasi rona dan saturasi sambil 
+    % mempertahankan pencahayaan.
 %     figure, imshow(Img)
 %     figure, imshow(Img_gray)
     % mengkonversi citra grayscale menjadi citra biner
     bw = imbinarize(Img_gray,.5);
+    % membuat gambar biner dari gambar skala abu-abu dengan mengganti 
+    % semua nilai di atas ambang batas yang ditentukan secara 
+    % global dengan 1s dan menyetel semua nilai lainnya ke 0s.
+    
 %     figure, imshow(bw)
     % melakukan operasi komplemen
-    bw = imcomplement(bw);
+    bw = imcomplement(bw); % mengubah nilai 1 menjadi 0 dan sebaliknya
 %     figure, imshow(bw)
     % melakukan operasi morfologi untuk menyempurnakan hasil segmentasi
-    % 1. filling holes
-    bw = imfill(bw,'holes');
+    % 1. filling holes 
+    bw = imfill(bw,'holes'); % mengisi nilai pada area berlubang
 %     figure, imshow(bw)
     % 2. area opening
-    bw = bwareaopen(bw, 100);
+    bw = bwareaopen(bw, 100); % menghapus nilai pada noises
 %     figure, imshow(bw)
 
     HSV = rgb2hsv(Img);
